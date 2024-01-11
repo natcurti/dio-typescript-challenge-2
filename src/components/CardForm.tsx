@@ -10,22 +10,46 @@ import {
 import {EmailIcon, LockIcon} from '@chakra-ui/icons';
 import { SendButton } from './Button';
 import { login } from '../services/login';
+import { useState, useEffect } from 'react';
+import { api } from '../api';
 
+interface IUserData{
+  email: string
+  password: string
+  name: string
+}
 
 export const CardForm = () => {
+    const [email, setEmail] = useState<string>('');
+    const [userData, setUserData] = useState<null | IUserData>()
+
+    useEffect(() => {
+      const getData = async () => {
+        const data: any | IUserData = await api;
+        setUserData(data);
+      }
+
+      getData();
+    }, [])   
+
     return(
         <Flex flexDirection='column' width='30%' backgroundColor='#FFF' borderRadius='0.5rem' 
         padding='2rem' gap='1rem' boxShadow='15px 15px 30px -15px rgba(0,0,0,0.85)' marginTop='2rem'>
           <Heading as='h2' color='#112D43' fontSize='2rem' fontWeight='700' fontFamily="'Open Sans', sans-serif">
             Login:
-          </Heading>          
+          </Heading>
+          {(userData === null || userData === undefined) ? <h2>Loading....</h2> : <h2>Informações Carregadas</h2>}
+          <Text>{userData?.name}</Text>         
           <Text color='#A1A1A3' fontFamily="'Open Sans', sans-serif" fontSize='1rem'>
             Digite seus dados nos campos abaixo.
           </Text>
           <Flex flexDirection='column' gap='0.5rem' fontFamily="'Open Sans', sans-serif" fontWeight='700'>
             <label htmlFor='inputEmail'>Email: </label>
             <InputGroup size='lg' fontWeight='400'> 
-              <Input color='#112D43' fontSize='1rem' placeholder="Digite seu email" _placeholder={{color: '#A1A1A3', fontSize:'1rem' }} id='inputEmail'/>
+              <Input color='#112D43' fontSize='1rem' placeholder="Digite seu email" 
+              _placeholder={{color: '#A1A1A3', fontSize:'1rem' }} id='inputEmail'
+              value={email} onChange={(event: any) => setEmail(event.target.value)}
+              />
               <InputRightElement pointerEvents="none">
                 <EmailIcon color='#112D43'/>
               </InputRightElement>
@@ -41,7 +65,7 @@ export const CardForm = () => {
             </InputGroup>
           </Flex>
           <Link color='#A1A1A3' fontFamily="'Open Sans', sans-serif" href='#'>Esqueci minha senha</Link>
-          <SendButton title='Enviar' onClickFunction={login}/>
+          <SendButton title='Enviar' onClickFunction={() => {login(email)}}/>
         </Flex>
     )
 }

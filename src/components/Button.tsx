@@ -1,10 +1,11 @@
 import {
     Button
 } from '@chakra-ui/react';
+import { MouseEventHandler } from 'react';
 
 interface IButton{
     title: string
-    onClickFunction: () => void
+    onClickFunction: MouseEventHandler
 }
 
 export const SendButton = ({title, onClickFunction} : IButton) => {

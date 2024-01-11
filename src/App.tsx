@@ -9,6 +9,7 @@ import { Header } from './components/Header';
 import { CardForm } from './components/CardForm';
 
 function App() {
+
   return (
     <ChakraProvider>
       <Flex height='100vh' flexDirection='column' width='100%' backgroundColor='#4111A1' alignItems='center'>
