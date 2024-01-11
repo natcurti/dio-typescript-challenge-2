@@ -10,27 +10,10 @@ import {
 import {EmailIcon, LockIcon} from '@chakra-ui/icons';
 import { SendButton } from './Button';
 import { login } from '../services/login';
-import { useState, useEffect } from 'react';
-import { api } from '../api';
-
-interface IUserData{
-  email: string
-  password: string
-  name: string
-}
+import { useState } from 'react';
 
 export const CardForm = () => {
-    const [email, setEmail] = useState<string>('');
-    const [userData, setUserData] = useState<null | IUserData>()
-
-    useEffect(() => {
-      const getData = async () => {
-        const data: any | IUserData = await api;
-        setUserData(data);
-      }
-
-      getData();
-    }, [])   
+    const [email, setEmail] = useState<string>(''); 
 
     return(
         <Flex flexDirection='column' width='30%' backgroundColor='#FFF' borderRadius='0.5rem' 
@@ -38,8 +21,8 @@ export const CardForm = () => {
           <Heading as='h2' color='#112D43' fontSize='2rem' fontWeight='700' fontFamily="'Open Sans', sans-serif">
             Login:
           </Heading>
-          {(userData === null || userData === undefined) ? <h2>Loading....</h2> : <h2>Informações Carregadas</h2>}
-          <Text>{userData?.name}</Text>         
+          {/* {(userData === null || userData === undefined) ? <h2>Loading....</h2> : <h2>Informações Carregadas</h2>} */}
+          {/* <Text>{userData?.name}</Text>*/}
           <Text color='#A1A1A3' fontFamily="'Open Sans', sans-serif" fontSize='1rem'>
             Digite seus dados nos campos abaixo.
           </Text>

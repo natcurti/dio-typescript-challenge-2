@@ -1,22 +1,26 @@
 import '@fontsource/open-sans/400.css';
 import '@fontsource/open-sans/700.css';
-import { 
-  ChakraProvider,
-  Flex
-} from '@chakra-ui/react';
 
-import { Header } from './components/Header';
-import { CardForm } from './components/CardForm';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import { ChakraProvider } from '@chakra-ui/react';
+import Layout from './components/Layout';
+import Account from './pages/Account';
 
 function App() {
 
   return (
+    <BrowserRouter>
     <ChakraProvider>
-      <Flex height='100vh' flexDirection='column' width='100%' backgroundColor='#4111A1' alignItems='center'>
-        <Header/>
-        <CardForm/> 
-      </Flex>
+      <Layout>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/conta/:id' element={<Account/>}/>
+        </Routes>
+      </Layout>
     </ChakraProvider>
+    </BrowserRouter>
+
   );
 }
 
