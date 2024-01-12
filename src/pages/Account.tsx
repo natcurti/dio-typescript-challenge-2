@@ -1,8 +1,9 @@
 import { SimpleGrid, Spinner, Center, Flex } from "@chakra-ui/react";
 import AccountInfo from "../components/AccountInfo";
 import { api } from '../api';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { AppContext } from "../components/AppContext";
 
 interface IUserData{
     email: string
@@ -43,6 +44,9 @@ const Account = () => {
     if(userData && id !== userData.id){
         navigate('/');
     }
+
+    const { isLoggedIn } = useContext(AppContext);
+    (!isLoggedIn) && navigate('/');
 
     return(
         <Flex justifyContent='center' marginTop='5rem'>
