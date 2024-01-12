@@ -1,12 +1,11 @@
 import '@fontsource/open-sans/400.css';
 import '@fontsource/open-sans/700.css';
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import { BrowserRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import Layout from './components/Layout';
-import Account from './pages/Account';
 import { AppContextProvider } from './components/AppContext';
+import MainRoutes from './routes';
 
 function App() {
 
@@ -15,10 +14,7 @@ function App() {
       <AppContextProvider>
         <ChakraProvider>
           <Layout>
-            <Routes>
-              <Route path='/' element={<Home/>}/>
-              <Route path='/conta/:id' element={<Account/>}/>
-            </Routes>
+            <MainRoutes/>
           </Layout>
         </ChakraProvider>
       </AppContextProvider>
