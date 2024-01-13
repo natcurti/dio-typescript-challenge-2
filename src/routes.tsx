@@ -5,7 +5,8 @@ import { Routes, Route } from 'react-router-dom';
 import { AppContext } from './components/AppContext';
 
 const MainRoutes = () => {
-    const {isLoggedIn} = useContext(AppContext)
+    const {isLoggedIn} = useContext(AppContext);
+
     return(
         <Routes>
             <Route path='/' element={<Home/>}/>

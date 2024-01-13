@@ -2,10 +2,11 @@ import { Flex, Heading, Text } from "@chakra-ui/react";
 
 interface IAccountInfo{
     mainContent: string,
-    content: string
+    content: string,
+    subContent: string
 }
 
-const AccountInfo = ({mainContent, content}: IAccountInfo) => {
+const AccountInfo = ({mainContent, content, subContent}: IAccountInfo) => {
     return(
         <Flex 
         backgroundColor='#FFF' 
@@ -19,7 +20,8 @@ const AccountInfo = ({mainContent, content}: IAccountInfo) => {
         alignItems='center'
         >
             <Heading as='h2' size='lg'>{mainContent}</Heading>
-            <Text fontSize='1.25rem'>{content}</Text>           
+            <Text fontSize='1.25rem'>{content}</Text>
+            <Text fontSize='1rem'>{subContent}</Text>           
         </Flex>
     )
 }

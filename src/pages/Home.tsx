@@ -11,26 +11,33 @@ import {
 import {EmailIcon, LockIcon} from '@chakra-ui/icons';
 import { SendButton } from '../components/Button';
 import { login } from '../services/login';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../components/AppContext';
-import { changeLocalStorage } from '../services/storage';
+import { createLocalStorage } from '../services/storage';
 
 const Home = () => {
   const [email, setEmail] = useState<string>(''); 
-  const {setIsLoggedIn} = useContext(AppContext);
+  const [password, setPassword] = useState<string>('');
+  const {setIsLoggedIn, storage} = useContext(AppContext);
   const navigate = useNavigate();
 
-  const validateUser = async (email:string) => {
-    const loggedIn = await login(email);
+  const validateUser = async (email:string, password: string) => {
+    const loggedIn = await login(email, password);
 
     if(!loggedIn){
-      return alert('Email inválido');
+      return alert('Email e senha inválidos');
     }
     setIsLoggedIn(true);
-    changeLocalStorage({login: true})
+    createLocalStorage({login: true, user: email, userPassword: password})
     navigate('/conta/1')
   }
+
+  useEffect(() => {
+    if(storage){
+      navigate('/conta/1');
+    }
+  }, [storage, navigate])
 
   return (
     <CardForm>
@@ -87,6 +94,8 @@ const Home = () => {
             fontSize="1rem"
             placeholder="Digite sua senha"
             _placeholder={{ color: "#A1A1A3", fontSize: "1rem" }}
+            value={password}
+            onChange={(event: any) => setPassword(event.target.value)}
             id="inputPassword"
           />
           <InputRightElement pointerEvents="none">
@@ -100,7 +109,7 @@ const Home = () => {
       <SendButton
         title="Enviar"
         onClickFunction={() => {
-          validateUser(email);
+          validateUser(email, password);
         }}
       />
     </CardForm>

@@ -37,7 +37,6 @@ const Account = () => {
     // console.log(params);
 
     const {id} = useParams();
-    console.log(id);
 
     const navigate = useNavigate();
 
@@ -45,8 +44,8 @@ const Account = () => {
         navigate('/');
     }
 
-    const { isLoggedIn } = useContext(AppContext);
-    (!isLoggedIn) && navigate('/');
+    const { isLoggedIn, storage } = useContext(AppContext);
+    (!isLoggedIn && !storage) && navigate('/');
 
     return(
         <Flex justifyContent='center' marginTop='5rem'>
@@ -60,11 +59,12 @@ const Account = () => {
                     <AccountInfo 
                         mainContent={`Bem vindo(a) ${userData.name}`}
                         content={`Hoje é dia: ${actualData.getDate()} de ${actualMonth} de ${actualData.getFullYear()}`}
-                    
+                        subContent={`Você está logada no email ${userData.email}`}
                     />
                     <AccountInfo 
                         mainContent="Saldo"
                         content={`R$ ${userData.balance}`}
+                        subContent={`Ver detalhes do saldo`}
                     />
                 </SimpleGrid>
                 )
